@@ -1,56 +1,77 @@
 # Proyecto-Lenguaje-de-se-a
 
-Este proyecto es de la materia Inteligencia Artificial: detecta el movimiento de las manos asociándolo a lenguaje de señas.
+## Sistema de Reconocimiento de Lengua de Señas con Visión Artificial (MediaPipe + OpenCV)
 
-## 🖐️ Reacción con Memes por Gestos (MediaPipe + OpenCV)
+Proyecto de la materia Inteligencia Artificial. Reconoce en tiempo real letras estáticas del alfabeto dactilológico de la Lengua de Señas Mexicana (LSM) usando los 21 puntos de la mano que detecta MediaPipe, y las convierte en texto.
 
-Detecta gestos de la mano en tiempo real con la cámara y muestra un meme de reacción en una segunda ventana.
+Para escribir, **mantén una seña 1.5 segundos**. Una barra de progreso muestra cuánto falta y la letra se agrega al texto. Para repetir la misma letra, cambia de seña o baja la mano y vuelve a hacerla.
 
-## 📋 Estructura
+## Señas soportadas
 
-```
-Proyecto/
-├── main.py              # Programa principal
-├── memes/
-│   ├── chango_pensando.png  # Gesto DUDA   (mano en la cabeza)
-│   ├── gato_lentes.png      # Gesto LENTES (índice arriba)
-│   └── gato_puno.png        # Gesto PUNO   (puño cerrado)
-├── venv/                # Único entorno virtual del proyecto (Python 3.12)
-├── run_main.bat         # Script para ejecutar en Windows
-├── verify_setup.py      # Comprueba dependencias e imágenes
-└── README.md
-```
+| Seña | Cómo hacerla |
+|---|---|
+| **A** | Puño cerrado con el pulgar estirado al costado del índice |
+| **B** | Los 4 dedos estirados y juntos, pulgar doblado sobre la palma |
+| **E** | Dedos doblados en garra, con las puntas sobre el pulgar |
+| **I** | Solo el meñique levantado |
+| **L** | Índice arriba y pulgar hacia el lado, formando una L |
+| **O** | Punta del índice tocando la punta del pulgar, formando un círculo |
+| **U** | Índice y medio levantados y juntos |
+| **V** | Índice y medio levantados y separados |
+| **W** | Índice, medio y anular levantados |
+| **Y** | Pulgar y meñique estirados, los 3 dedos centrales cerrados |
+| **ESPACIO** | Mano abierta con los 5 dedos separados |
+| **BORRAR** | Puño cerrado con el pulgar por delante de los dedos (borra la última letra) |
 
-## ⚙️ Dependencias
+## Interfaz
 
-- **Python** 3.12 (MediaPipe 0.10.18 no es compatible con 3.13)
-- **OpenCV** (cv2) 4.11.0
-- **MediaPipe** 0.10.18
+- **Camara IA - Deteccion LSM:** video en espejo con los puntos de la mano, recuadro alrededor de la mano, la seña detectada y la barra de progreso.
+- **Panel Traductor LSM:** la seña actual en grande, la guía rápida de señas y la caja con el texto acumulado.
 
-## 🚀 Cómo ejecutar
+## Teclas
 
-```cmd
-run_main.bat
-```
-o bien
+| Tecla | Acción |
+|---|---|
+| `Espacio` | Agregar espacio |
+| `Backspace` | Borrar la última letra |
+| `C` | Limpiar todo el texto |
+| `D` | Mostrar/ocultar el diagnóstico (estado de cada dedo, para calibrar) |
+| `ESC` o la `X` de una ventana | Salir |
+
+## Cómo ejecutar
+
+1. Abre la carpeta del proyecto en VS Code.
+2. Pulsa **F5** (o ▶️ en *Ejecutar y depurar* → "Traductor LSM (main.py)").
+
+`.vscode/launch.json` ya usa el Python de `venv`. También puedes ejecutarlo desde la terminal:
+
 ```powershell
 .\venv\Scripts\python.exe main.py
 ```
 
-## 🎮 Gestos
+### Crear el entorno desde cero
 
-| Gesto | Cómo hacerlo | Meme |
-|---|---|---|
-| `NINGUNO` | Sin mano, o mano relajada | Ventana en negro |
-| `DUDA` | Lleva la mano a la cabeza (frente, coronilla o sien) como rascándote | Chango pensando |
-| `LENTES` | Solo el índice extendido hacia arriba, los demás dedos cerrados | Gato con lentes |
-| `PUNO` | Los cuatro dedos cerrados y el pulgar recogido sobre el puño | Gato golpeando |
+```powershell
+py -3.12 -m venv venv
+.\venv\Scripts\python.exe -m pip install opencv-python mediapipe==0.10.18
+```
 
-- **ESC**: Salir del programa
+> MediaPipe 0.10.18 requiere Python 3.12 (no es compatible con 3.13).
 
-## 🔧 Configuración
+## Calibración
 
-En `main.py`:
-- `FRAMES_ESTABLES`: frames seguidos que debe mantenerse un gesto antes de mostrarse (anti-parpadeo)
-- `FRAMES_MEMORIA_CARA`: frames que se recuerda la cara cuando la mano la tapa
-- `min_detection_confidence` / `min_tracking_confidence`: confianza de MediaPipe
+Los umbrales geométricos están agrupados al inicio de `main.py`, por ejemplo `R_EXTENDIDO`, `T_PULGAR_CRUZADO`, `ANG_U_MAX` y `O_CONTACTO`. Si una seña cuesta trabajo que se reconozca, activa el diagnóstico con la tecla **D**: verás el estado de cada dedo (`EXT` estirado, `DOB` doblado, `CER` cerrado) y la posición del pulgar. Con eso puedes ajustar el umbral correspondiente.
+
+## Estructura
+
+```
+Proyecto/
+├── .vscode/       # Configuración para ejecutar con F5
+├── venv/          # Entorno virtual (no se sube a Git)
+├── .gitignore
+├── main.py        # Programa principal
+├── README.md
+└── DOCUMENTACION.md  # Documentación técnica completa
+```
+
+📄 Consulta la [documentación técnica](DOCUMENTACION.md) para conocer la arquitectura, el algoritmo de clasificación, la calibración y las pruebas.

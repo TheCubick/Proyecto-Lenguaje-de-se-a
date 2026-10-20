@@ -1,12 +1,12 @@
-# Entorno virtual y cachés de Python
+# Entornos virtuales
 venv/
 .venv/
+env/
+
+# Cachés de Python
 __pycache__/
-*.pyc
+*.py[cod]
 
 # Archivos del sistema
 Desktop.ini
 Thumbs.db
-
-# Clon local del repositorio (no forma parte del proyecto)
-Proyecto-Lenguaje-de-se-a/
