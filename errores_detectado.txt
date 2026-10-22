@@ -1,0 +1,4 @@
+- error o mejor dicho no visualiza el levantamiento de ceja (buscar si existe alguna seña para pregunta)
+- agregar todo el abecedario tanto los que tienen movimientos
+- agregar una voz para mencionar que es lo que aparece (tanto letras como palabras)
+- quitar los guion bajo por espacios en blanco

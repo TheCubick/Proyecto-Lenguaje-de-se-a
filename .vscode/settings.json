@@ -1,6 +1,6 @@
 {
     // Usa siempre el Python del entorno virtual del proyecto
-    "python.defaultInterpreterPath": "${workspaceFolder}\venv\Scripts\python.exe",
+    "python.defaultInterpreterPath": "${workspaceFolder}/venv/Scripts/python.exe",
     "python.terminal.activateEnvironment": true,
 
     // PowerShell con ExecutionPolicy Bypass para que Activate.ps1 no se bloquee
